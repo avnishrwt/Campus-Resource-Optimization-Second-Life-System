@@ -38,10 +38,10 @@ class request
 class transaction
 {
     private:
-        int transactionId;
-        int requestId;
-        int userId;
-        int resourceId;
+            int transactionId;
+            int requestId;
+            int userId;
+            int resourceId;
 
     public:
 
@@ -91,10 +91,54 @@ class storage
 
     public:
 
-    void addRequest(int userId , string description )
+    void addrequest(int userId , string description)
     {
-        
+        request req(next_req_Id , userId , description);       // object creation 
+
+
+        requests.push_back(req);
+
+
+
+        request_map.emplace(next_req_Id , req);
+
+
+        next_req_Id++;
+
     }
+
+
+
+
+    void addtransaction(int requestId , int userId , int resourceId)
+    {
+        transaction trans(next_trans_Id , requestId , userId , resourceId);    // object creation 
+
+        transactions.push_back(trans);
+
+        transaction_map.emplace(next_trans_Id , trans);      //inplace of emplace can also use insert as it map.insert({next_trans_id , trans})
+
+
+        next_trans_Id++;
+
+
+    }
+
+
+    void showrequests()
+    {
+
+        cout << "HERE ARE THE REQUESTS : " << '\n';
+
+        for(auto &it : requests)     // & is used bcs of the reason so that no new copy of each and every object not be created 
+        {
+            it.display();
+
+            cout <<'\n';
+
+        }
+    }
+
 };
 
 
