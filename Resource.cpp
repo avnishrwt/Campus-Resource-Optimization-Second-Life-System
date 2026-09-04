@@ -49,4 +49,54 @@ class Resource
     {
         return isBooked;
     }
+
+    //This function tells the user that the resource is already booked or not
+    bool book() 
+    {
+        if (isBooked) 
+        {
+            return false;
+        }
+    isBooked = true;
+    return true;
+    }
+
+    //This function releases the resource when the time is over.
+    void release()
+    {
+        isBooked=false;
+    }
 };
+
+int main() {
+    Resource r(1, "Lab-1", 40, "Block A");
+    cout << "Name: " << r.getName() << endl;
+    cout << "Capacity: " << r.getCapacity() << endl;
+    cout << "Location: " << r.getLocation() << endl;
+    cout << "Booked: " << r.getIsBooked() << endl;
+
+    //if the resource is not booked
+
+    cout<< "Booking resource..." << endl;
+    if(r.book())
+    {
+        cout<<"Resoursce Booked successfully!"<<endl;
+    }
+    else
+    {
+        cout<<"Resource is already booked!"<<endl;
+    }
+
+    //if the resource was booked and we are trying to book it again
+    
+    cout<< "Trying to book the same resource again..." << endl;
+    if(r.book())
+    {
+        cout<<"Resoursce Booked successfully!"<<endl;
+    }
+    else
+    {
+        cout<<"Resource is already booked!"<<endl;
+    }
+    return 0;
+}
