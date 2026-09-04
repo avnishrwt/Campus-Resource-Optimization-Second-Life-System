@@ -68,7 +68,8 @@ class Resource
     }
 };
 
-int main() {
+int main() 
+{
     Resource r(1, "Lab-1", 40, "Block A");
     cout << "Name: " << r.getName() << endl;
     cout << "Capacity: " << r.getCapacity() << endl;
@@ -88,7 +89,7 @@ int main() {
     }
 
     //if the resource was booked and we are trying to book it again
-    
+
     cout<< "Trying to book the same resource again..." << endl;
     if(r.book())
     {
@@ -97,6 +98,21 @@ int main() {
     else
     {
         cout<<"Resource is already booked!"<<endl;
+    }
+
+    //Releasing the resource
+    cout << "\nReleasing the resource..." << endl;
+    r.release();
+    cout << "Booked: " << r.getIsBooked() << endl;
+
+    cout << "\nTrying to book it again after release..." << endl;
+    if (r.book()) 
+    {
+        cout << "Booking successful!" << endl;
+    }  
+    else 
+    {
+        cout << "Booking failed - already booked." << endl;
     }
     return 0;
 }
