@@ -78,7 +78,7 @@ int main()
 
     //if the resource is not booked
 
-    cout<< "Booking resource..." << endl;
+    cout<< "\nBooking resource..." << endl;
     if(r.book())
     {
         cout<<"Resoursce Booked successfully!"<<endl;
@@ -90,7 +90,7 @@ int main()
 
     //if the resource was booked and we are trying to book it again
 
-    cout<< "Trying to book the same resource again..." << endl;
+    cout<< "\nTrying to book the same resource again..." << endl;
     if(r.book())
     {
         cout<<"Resoursce Booked successfully!"<<endl;
@@ -100,7 +100,7 @@ int main()
         cout<<"Resource is already booked!"<<endl;
     }
 
-    //Releasing the resource
+    //Releasing the resource 
     cout << "\nReleasing the resource..." << endl;
     r.release();
     cout << "Booked: " << r.getIsBooked() << endl;
