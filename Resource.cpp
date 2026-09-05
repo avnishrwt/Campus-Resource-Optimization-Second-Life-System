@@ -66,5 +66,17 @@ class Resource
     {
         isBooked=false;
     }
+
+    void displayDetails() const 
+    {
+        cout << "\nResource Details:\n";
+        cout << "ID: " << resourceId
+            << " | Name: " << name
+            << " | Capacity: " << capacity
+            << " | Location: " << location
+            << " | Status: " << (isBooked ? "BOOKED" : "FREE")
+            << endl;
+    }
 };
+
 
