@@ -3,6 +3,15 @@
 #include<string>
 using namespace std;
 
+
+struct TimeSlot
+{
+    string day;
+    int startHour;
+    int endHour;
+};
+
+
 class Resource 
 {
     protected:
