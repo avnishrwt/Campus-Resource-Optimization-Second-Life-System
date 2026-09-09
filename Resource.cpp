@@ -76,6 +76,7 @@ class Resource
         isBooked=false;
     }
 
+    //This function displays the details of the resource.
     void displayDetails() const 
     {
         cout << "\nResource Details:\n";
