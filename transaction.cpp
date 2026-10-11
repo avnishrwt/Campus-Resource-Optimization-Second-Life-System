@@ -1,7 +1,9 @@
+#include <iostream>
+#include <string>
 #include <vector>
 #include <unordered_map>
-#include <iostream>
-
+#include <queue>
+ 
 using namespace std;
 
 
@@ -9,28 +11,45 @@ class request
 {
     int requestId;
     int userId;
+    int resourceId;
     string description;
+    string description;
+    int priority;
+    string status;
     
 
 
     public:
-        request(int reqId, int uId , string des)
+        request(int reqId, int uId , int resId , string des , int prio)
         {
             requestId = reqId;
             userId = uId;
+            resourceId = resId;
             description = des;
+            priority = prio;
+            status = "Pending";
+
         }
 
-        int getrequestId()
-        {
-            return requestId;
-        }
+        int getRequestId()   { return requestId; }
+        int getUserId()      { return userId; }
+        int getResourceId()  { return resourceId; }
+        int getPriority()    { return priority; }
+        string getStatus()   { return status; }
+
+
+        void setStatus(string s) { status = s; }
+
+
 
         void display()
         {
-            cout << "Request ID   : " << requestId << endl;
-            cout << "User ID     : " << userId << endl;
-            cout << "Description : " << description << endl;
+        cout << "Request ID  : " << requestId << endl;
+        cout << "User ID     : " << userId << endl;
+        cout << "Resource ID : " << resourceId << endl;
+        cout << "Description : " << description << endl;
+        cout << "Priority    : " << priority << endl;
+        cout << "Status      : " << status << endl;
         }
 };
 
@@ -38,10 +57,11 @@ class request
 class transaction
 {
     private:
-            int transactionId;
-            int requestId;
-            int userId;
-            int resourceId;
+        int transactionId;
+        int requestId;
+        int userId;
+        int resourceId;
+        bool returned;
 
     public:
 
@@ -51,19 +71,23 @@ class transaction
             requestId = reqId;
             userId = uId;
             resourceId = resId;
+            returned = false; 
         }
 
-        int getTransactionId()
-        {
-            return transactionId;
-        }
+            int getTransactionId() { return transactionId; }
+            int getRequestId()     { return requestId; }
+            int getResourceId()    { return resourceId; }
+            bool isReturned()      { return returned; }
+
+            void markReturned() { returned = true; }
 
         void display()
         {
-            cout << "Transaction ID : " << transactionId << endl;
-            cout << "Request ID     : " << requestId << endl;
-            cout << "User ID        : " << userId << endl;
-            cout << "Resource ID    : " << resourceId << endl;
+        cout << "Transaction ID : " << transactionId << endl;
+        cout << "Request ID     : " << requestId << endl;
+        cout << "User ID        : " << userId << endl;
+        cout << "Resource ID    : " << resourceId << endl;
+        cout << "Status         : " << (returned ? "Returned" : "Borrowed") << endl;
         }
 };
 
