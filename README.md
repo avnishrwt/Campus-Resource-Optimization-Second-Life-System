@@ -1,6 +1,6 @@
 This project is for PBL 3rd semester 
 
-Project name - Campus Resource Optimization & Second-Life System
+Project name - Campus Resource Optimization System
 
 Desription - To manage and utilize the resources to full extent such as classrooms , belongings which can be shared(calculators , books , etc. ) 
 
