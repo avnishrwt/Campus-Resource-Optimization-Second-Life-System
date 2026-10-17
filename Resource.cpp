@@ -34,13 +34,37 @@ struct TimeSlot
         //None of the safe cases matched, so the slots overlap
         return true;
     }
+
+        //Checks if the slot makes sense before using it
+    bool isValid()
+    {
+        //A day must be given
+        if (day == "")
+        {
+            return false;
+        }
+
+        //Hours must be between 0 and 24
+        if (startHour < 0 || endHour > 24)
+        {
+            return false;
+        }
+
+        //Start must be before end (14 to 12 is not a real slot)
+        if (startHour >= endHour)
+        {
+            return false;
+        }
+
+        return true;
+    }
 };
 
 
 class Resource 
 {
     protected:
-    
+
     int resourceId;
     string name;
     int capacity;
@@ -81,6 +105,11 @@ class Resource
 
     bool isAvailable(TimeSlot s)
     {
+        //An invalid slot can never be available
+        if (!s.isValid())
+        {
+            return false;
+        }
         for (int i = 0; i < bookedSlots.size(); i++)
         {
             if (bookedSlots[i].overlaps(s))
@@ -102,7 +131,7 @@ class Resource
     }
 
     //This function displays the details of the resource.
-    void displayDetails() const 
+    virtual void displayDetails() const 
     {
         cout << "\nResource Details:\n";
         cout << "ID: " << resourceId
@@ -112,21 +141,65 @@ class Resource
             << " | Booked slots: " << bookedSlots.size()
             << endl;
     }
+
+    virtual ~Resource() {}
+};
+
+class Classroom : public Resource
+{
+    private:
+
+    string department;
+
+    public:
+
+    //Constructor: calls the Resource constructor first, then sets its own field
+    Classroom(int id, string n, int cap, string loc, string dept): Resource(id, n, cap, loc)
+    {
+        department = dept;
+    }
+
+    string getDepartment()
+    {
+        return department;
+    }
+
+    //Overrides the base version to also show the department
+    void displayDetails() const override
+    {
+        Resource::displayDetails();
+        cout << "Type: Classroom | Department: " << department << endl;
+    }
 };
 
 int main()
 {
     Resource lab(2, "Lab-1", 40, "Block A");
 
-    TimeSlot s1 = {"Mon", 10, 12};
-    TimeSlot s2 = {"Mon", 11, 13};
-    TimeSlot s3 = {"Mon", 12, 13};
-    TimeSlot s4 = {"Tue", 10, 12};
+    TimeSlot s1 = {"Mon", 10, 12};   //first booking
+    TimeSlot s2 = {"Mon", 11, 13};   //overlaps s1
+    TimeSlot s3 = {"Mon", 12, 14};   //starts right after s1
+    TimeSlot s4 = {"Tue", 10, 12};   //different day
 
-    cout << "Mon 10-12 (expected BOOKED): " << (lab.book(s1) ? "BOOKED" : "CLASH") << endl;
-    cout << "Mon 11-13 (expected CLASH):  " << (lab.book(s2) ? "BOOKED" : "CLASH") << endl;
-    cout << "Mon 12-13 (expected BOOKED): " << (lab.book(s3) ? "BOOKED" : "CLASH") << endl;
-    cout << "Tue 10-12 (expected BOOKED): " << (lab.book(s4) ? "BOOKED" : "CLASH") << endl;
+    if (lab.book(s1))
+        cout << "Mon 10-12: Booked" << endl;
+    else
+        cout << "Mon 10-12: Clash" << endl;
+
+    if (lab.book(s2))
+        cout << "Mon 11-13: Booked" << endl;
+    else
+        cout << "Mon 11-13: Clash" << endl;
+
+    if (lab.book(s3))
+        cout << "Mon 12-14: Booked" << endl;
+    else
+        cout << "Mon 12-14: Clash" << endl;
+
+    if (lab.book(s4))
+        cout << "Tue 10-12: Booked" << endl;
+    else
+        cout << "Tue 10-12: Clash" << endl;
 
     lab.displayDetails();
 
